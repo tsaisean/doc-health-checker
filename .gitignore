@@ -1,3 +1,6 @@
 .idea/
 /confluence/pages.csv
-/confluence/credential.json
+/confluence/confluence_credential.json
+*.pyc
+*.DS_Store
+google/google_credential.json

@@ -1,11 +1,26 @@
+import os
+import sys
+
+from confluence.csv_output_handler import CsvOutputHandler
+from confluence.gsheet_output_handler import GsheetOutputHandler
+from confluence.output_handler_interface import OutputHandlerInterface
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from atlassian import Confluence
-import csv
 import datetime
 import json
+from enum import Enum
 
 credential = None
 
-with open('credential.json') as json_file:
+
+class OutputMode(Enum):
+    CSV = 1
+    GOOGLESHEET = 2
+
+
+with open('confluence_credential.json') as json_file:
     credential = json.load(json_file)
 
 confluence = Confluence(
@@ -15,7 +30,7 @@ confluence = Confluence(
 )
 
 
-def print_children(csv_writer, root_page_id, level):
+def print_children(root_page_id, output_handler, level):
     pages = confluence.get_page_child_by_type(root_page_id, type='page', start=None, limit=None)
 
     for page in pages:
@@ -36,15 +51,27 @@ def print_children(csv_writer, root_page_id, level):
         row += [""] * (5 - len(row))
         row.append(last_updated)
 
-        csv_writer.writerow(row)
-        print_children(csv_writer, page_id, level + 1)
+        if issubclass(output_handler, OutputHandlerInterface):
+            output_handler.print(row)
+        else:
+            raise Exception("output_handler is not subclass of OutputHandler.")
+
+        print_children(page_id, output_handler, level + 1)
 
 
 if __name__ == '__main__':
     ROOT_PAGE_ID = "1577058409"
+    mode = OutputMode.GOOGLESHEET
 
-    with open('pages.csv', 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        print_children(csv_writer, ROOT_PAGE_ID, 0)
+    output_handler = None
+    if mode == OutputMode.CSV:
+        output_handler = CsvOutputHandler()
+    elif mode == OutputMode.GOOGLESHEET:
+        output_handler = GsheetOutputHandler("Search")
+        output_handler.clear()
+        output_handler.clear_formating()
+        output_handler.print_header()
+
+    print_children(ROOT_PAGE_ID, output_handler, 0)
 
     print("Finished!")
