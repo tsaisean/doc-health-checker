@@ -10,7 +10,7 @@ def create_gsheet_client():
     Prints values from a sample spreadsheet.
     """
     creds = service_account.Credentials.from_service_account_file(
-        '../google_api/google_credential.json', scopes=SCOPES)
+        'google_api/google_credential.json', scopes=SCOPES)
 
     service = build('sheets', 'v4', credentials=creds)
 
