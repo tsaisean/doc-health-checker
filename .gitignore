@@ -3,5 +3,6 @@
 /confluence/confluence_credential.json
 *.pyc
 *.DS_Store
-google/google_credential.json
+google_api/google_credential.json
 /venv/
+pages.csv

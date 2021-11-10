@@ -1,11 +1,11 @@
 import os
 import sys
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from csv_output_handler import CsvOutputHandler
 from gsheet_output_handler import GsheetOutputHandler
 from output_handler_interface import OutputHandlerInterface
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from atlassian import Confluence
 import datetime
@@ -20,7 +20,7 @@ class OutputMode(Enum):
     GOOGLESHEET = 2
 
 
-with open('confluence_credential.json') as json_file:
+with open('confluence/confluence_credential.json') as json_file:
     credential = json.load(json_file)
 
 confluence = Confluence(
