@@ -1,9 +1,9 @@
 import os
 import sys
 
-from confluence.csv_output_handler import CsvOutputHandler
-from confluence.gsheet_output_handler import GsheetOutputHandler
-from confluence.output_handler_interface import OutputHandlerInterface
+from csv_output_handler import CsvOutputHandler
+from gsheet_output_handler import GsheetOutputHandler
+from output_handler_interface import OutputHandlerInterface
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
