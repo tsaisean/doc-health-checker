@@ -21,6 +21,7 @@ def print_children(csv_writer, root_page_id, level):
     for page in pages:
         page_id = page["id"]
         page_title = page["title"]
+        page_title_double_quoted = page_title.replace('"', '""')
 
         history = confluence.get_content_history(page_id)
         last_updated = history["lastUpdated"]["when"]
@@ -31,7 +32,7 @@ def print_children(csv_writer, root_page_id, level):
 
         print("  " * level + page_title + ", " + last_updated)
         row = [""] * level
-        row.append('=HYPERLINK("%s", "%s")' % (link, page_title))
+        row.append('=HYPERLINK("%s", "%s")' % (link, page_title_double_quoted))
         row += [""] * (5 - len(row))
         row.append(last_updated)
 
