@@ -1,14 +1,13 @@
 import os
 import sys
 
-from slack_helper.slack_helper import SlackHelper
-from slack_output_handler import SlackOutputHandler
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from output_handler_interface import OutputHandlerInterface
 from csv_output_handler import CsvOutputHandler
 from gsheet_output_handler import GsheetOutputHandler
-from output_handler_interface import OutputHandlerInterface
+from slack_output_handler import SlackOutputHandler
+from slack_helper.slack_helper import SlackHelper
 
 from atlassian import Confluence
 import datetime
@@ -18,6 +17,7 @@ from enum import Enum
 config = None
 config_confluence = None
 config_slack = None
+
 
 class OutputMode(Enum):
     CSV = 1
