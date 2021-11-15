@@ -1,5 +1,6 @@
 import googleapiclient
-from googleapiclient.discovery import build
+
+import util
 from google_api.google_api_client import create_gsheet_client
 
 
@@ -231,7 +232,9 @@ class GsheetOutputHandler:
             body=body).execute()
         # print('{0} cells updated.'.format(result.get('updatedCells')))
 
-    def print(self, row_data):
+    def add(self, level, title, link, last_updated):
+        row_data = util.generate_cvs_row(level, title, link, last_updated)
+
         row_data.append('=DATEDIF(F%d, NOW(), "M")' % self.row)
 
         values = [

@@ -1,0 +1,19 @@
+{
+  "slack": {
+    "bot_oauth_token": "",
+    "slack_channel_id": ""
+  },
+
+  "confluence": {
+    "url": "https://happy.atlassian.net",
+    "username": "abc@happy.com",
+    "password": "Go to this link https://id.atlassian.com/manage-profile/security/api-tokens to get your token.",
+    "confluence_page_id": "1577058409"
+  },
+
+  "alert_rules": {
+    "p0_days": 360,
+    "p1_days": 180, // Optional <Remember to remove this comment.>
+    "p2_days": 90 // Optional <Remember to remove this comment.>
+  }
+}

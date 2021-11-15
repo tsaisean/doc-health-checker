@@ -8,10 +8,10 @@ class OutputHandlerMeta(type):
         return cls.__subclasscheck__(type(instance))
 
     def __subclasscheck__(cls, subclass):
-        is_subclass = hasattr(subclass, 'print') and callable(subclass.print)
+        is_subclass = hasattr(subclass, 'add') and callable(subclass.add)
 
         if not is_subclass:
-            print('Method "print" is not implemented for %s' % subclass.__class__.__name__, file=sys.stderr)
+            print('Method "add" is not implemented for %s' % subclass.__class__.__name__, file=sys.stderr)
 
         return is_subclass
 

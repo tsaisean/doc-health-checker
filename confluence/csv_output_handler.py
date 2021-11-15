@@ -1,5 +1,7 @@
 import csv
 
+import util
+
 
 class CsvOutputHandler:
     def __init__(self):
@@ -9,5 +11,6 @@ class CsvOutputHandler:
     def __del__(self):
         self.csvfile.close()
 
-    def print(self, row):
+    def add(self, level, title, link, last_updated):
+        row = util.generate_cvs_row(level, title, link, last_updated)
         self.csv_writer.writerow(row)
