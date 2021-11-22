@@ -11,6 +11,6 @@ class CsvOutputHandler:
     def __del__(self):
         self.csvfile.close()
 
-    def add(self, level, title, link, last_updated):
-        row = util.generate_cvs_row(level, title, link, last_updated)
+    def add(self, level, title, link, last_updated, author):
+        row = util.generate_cvs_row(level, title, link, last_updated, author)
         self.csv_writer.writerow(row)

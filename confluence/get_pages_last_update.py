@@ -48,12 +48,13 @@ def print_children(root_page_id, output_handler, level):
         last_updated = history["lastUpdated"]["when"]
         last_updated = last_updated[:-1]
         last_updated = datetime.datetime.fromisoformat(last_updated)
+        last_update_author = history["lastUpdated"]["by"]["publicName"]
         link = config_confluence["url"] + "/wiki" + page["_links"]["webui"]
 
         print("  " * level + page_title + ", " + last_updated.__str__())
 
         if issubclass(output_handler, OutputHandlerInterface):
-            output_handler.add(level, page_title, link, last_updated)
+            output_handler.add(level, page_title, link, last_updated, last_update_author)
         else:
             raise Exception("output_handler is not subclass of OutputHandler.")
 

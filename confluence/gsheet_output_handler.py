@@ -232,8 +232,8 @@ class GsheetOutputHandler:
             body=body).execute()
         # print('{0} cells updated.'.format(result.get('updatedCells')))
 
-    def add(self, level, title, link, last_updated):
-        row_data = util.generate_cvs_row(level, title, link, last_updated)
+    def add(self, level, title, link, last_updated, author):
+        row_data = util.generate_cvs_row(level, title, link, last_updated, author)
 
         row_data.append('=DATEDIF(F%d, NOW(), "M")' % self.row)
 

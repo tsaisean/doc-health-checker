@@ -12,9 +12,9 @@ class SlackOutputHandler:
         self.msg = ""
         self.groups = [[], [], []]
 
-    def add(self, level, title, link, last_updated):
+    def add(self, level, title, link, last_updated, author):
         timedelta = datetime.now() - last_updated
-        msg = "<%s|%s> %d days" % (link, title, timedelta.days)
+        msg = "<%s|%s> %d days. Last updated by %s." % (link, title, timedelta.days, author)
 
         if timedelta.days > self.config["p0_days"]:
             self.groups[0].append(msg)
