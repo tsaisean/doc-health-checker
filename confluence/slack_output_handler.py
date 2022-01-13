@@ -24,7 +24,10 @@ class SlackOutputHandler:
             self.groups[2].append(msg)
 
     def flush(self):
-        self.msg = ":red_circle: These docs are outdated for more than `%d` days!\n" % self.config["p0_days"]
+        is_all_up_to_date = True
+        if len(self.groups[0]) > 0:
+            is_all_up_to_date = False
+            self.msg = ":red_circle: These docs are outdated for more than `%d` days!\n" % self.config["p0_days"]
 
         for i, msg in enumerate(self.groups[0]):
             self.msg += "      " + str(i+1) + ". " + msg + "\n"
@@ -32,14 +35,22 @@ class SlackOutputHandler:
         self.msg += "\n"
 
         if "p1_days" in self.config:
-            self.msg += ":large_yellow_circle: These docs are outdated for more than `%d` days!\n" % self.config["p1_days"]
+            if len(self.groups[1]) > 0:
+                is_all_up_to_date = False
+                self.msg += ":large_yellow_circle: These docs are outdated for more than `%d` days!\n" % self.config["p1_days"]
+
             for i, msg in enumerate(self.groups[1]):
                 self.msg += "      " + str(i+1) + ". " + msg + "\n"
 
         if "p2_days" in self.config:
-            self.msg += ":large_yellow_circle: These docs are outdated for more than `%d` days!\n" % self.config[
-                "p2_days"]
+            if len(self.groups[2]) > 0:
+                is_all_up_to_date = False
+                self.msg += ":large_yellow_circle: These docs are outdated for more than `%d` days!\n" % self.config["p2_days"]
+
             for i, msg in enumerate(self.groups[2]):
                 self.msg += "      " + str(i+1) + ". " + msg + "\n"
+
+        if is_all_up_to_date:
+            self.msg += "Your garden of the wiki smells great and fragrant, team! :tulip:\n"
 
         self.slack_helper.send_msg(self.msg)
